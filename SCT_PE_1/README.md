@@ -1,22 +1,35 @@
 # SCT_PE_1 - Writing Better Prompts
 
+**Track:** Prompt Engineering
+**Internship:** SkillCraft Technology
+**Task:** 01 of 04
+
+---
+
 ## Objective
 
 Learn the basics of prompt engineering by experimenting with clarity, specificity, and tone. Take 3 vague or ineffective prompts and rewrite them into improved versions. Compare and analyze the outputs to understand how prompt design affects LLM behavior.
 
 ---
 
-## What is Prompt Engineering?
+## Background: What is Prompt Engineering?
 
 Prompt engineering is the practice of designing and refining inputs given to a large language model (LLM) to produce more accurate, relevant, and useful outputs. A well-crafted prompt reduces ambiguity, sets context, and guides the model toward the desired response format and depth.
+
+Unlike traditional programming where you write explicit logic, prompt engineering works by shaping the model's interpretation of a task. The same underlying model can produce wildly different outputs depending on how the input is framed.
 
 ---
 
 ## The 3 Core Dimensions Explored
 
-- Clarity: removing vague language and being explicit about what is needed
-- Specificity: narrowing the scope so the model does not over-generalize
-- Tone: setting the register (formal, simple, technical) to match the audience
+**Clarity**
+Removing vague language and being explicit about what is needed. Vague prompts force the model to guess intent, which leads to generic outputs.
+
+**Specificity**
+Narrowing the scope so the model does not over-generalize. Specific prompts constrain the solution space and produce more targeted responses.
+
+**Tone**
+Setting the register (formal, simple, technical) to match the intended audience. Without a tone directive, the model defaults to a neutral middle ground that may not fit the use case.
 
 ---
 
@@ -31,8 +44,8 @@ Explain climate change.
 
 **Improved Prompt:**
 ```
-Explain climate change in 3 bullet points for a 12-year-old student. 
-Use simple language, avoid technical jargon, and focus on causes, 
+Explain climate change in 3 bullet points for a 12-year-old student.
+Use simple language, avoid technical jargon, and focus on causes,
 effects, and one thing students can do to help.
 ```
 
@@ -58,10 +71,10 @@ Write a Python function.
 
 **Improved Prompt:**
 ```
-Write a Python function called calculate_discount that takes two 
-parameters: original_price (float) and discount_percent (float). 
-It should return the final price after applying the discount. 
-Include input validation to raise a ValueError if either parameter 
+Write a Python function called calculate_discount that takes two
+parameters: original_price (float) and discount_percent (float).
+It should return the final price after applying the discount.
+Include input validation to raise a ValueError if either parameter
 is negative. Add a docstring and one usage example in a comment.
 ```
 
@@ -105,10 +118,10 @@ Give me career advice.
 
 **Improved Prompt:**
 ```
-I am a 3rd-year computer science student with skills in Python and 
-basic machine learning. I want to get a data science internship within 
-the next 6 months. Give me a step-by-step 3-month action plan with 
-specific resources, projects to build, and platforms to apply on. 
+I am a 3rd-year computer science student with skills in Python and
+basic machine learning. I want to get a data science internship within
+the next 6 months. Give me a step-by-step 3-month action plan with
+specific resources, projects to build, and platforms to apply on.
 Keep the tone practical and direct.
 ```
 
@@ -147,3 +160,24 @@ The single most impactful change across all three rewrites was adding a specific
 - Format instructions (bullet points, numbered steps, tables) are free structure that costs nothing to add.
 - Mentioning the audience is the fastest way to calibrate tone and complexity.
 - Adding constraints (length, scope, validation requirements) reduces the model's need to guess.
+- The gap between a vague and a well-engineered prompt is not about length. It is about precision.
+
+---
+
+## References and Further Reading
+
+- Brown et al. (2020). Language Models are Few-Shot Learners. https://arxiv.org/abs/2005.14165
+- Wei et al. (2022). Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. https://arxiv.org/abs/2201.11903
+- OpenAI Prompt Engineering Guide. https://platform.openai.com/docs/guides/prompt-engineering
+
+---
+
+## Acknowledgements
+
+SkillCraft Technology for the task structure and internship opportunity.
+
+The broader NLP research community whose published work on instruction tuning and few-shot learning provided the theoretical foundation for the techniques explored in this task.
+
+---
+
+Back to main repository: [Skill_Craft_Tasks](../README.md)

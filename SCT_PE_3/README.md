@@ -1,8 +1,22 @@
 # SCT_PE_3 - Prompting for Task Automation
 
+**Track:** Prompt Engineering
+**Internship:** SkillCraft Technology
+**Task:** 03 of 04
+
+---
+
 ## Objective
 
 Apply prompting to semi-automate a useful real-world task. Design a clear, consistent prompt that can handle multiple inputs and produce reliable output. Submit the prompt, at least 3 input-output examples, and a short reflection on prompt iteration and debugging.
+
+---
+
+## Background: Prompting for Automation
+
+Task automation with LLMs differs from creative prompting in one critical way: reliability matters more than originality. An automation prompt needs to produce the same structure every time, regardless of how the input is formatted. This requires a different design philosophy: explicit schemas, strict output rules, and no-inference constraints.
+
+The goal is to make the model behave like a deterministic parser, not a creative writer.
 
 ---
 
@@ -10,13 +24,15 @@ Apply prompting to semi-automate a useful real-world task. Design a clear, consi
 
 Converting raw, unstructured meeting notes into a consistent JSON format is a high-value automation task. It removes manual data entry, enables downstream processing (calendar sync, task trackers, CRM updates), and works reliably across different note styles.
 
+This task was chosen because meeting notes vary enormously in format, from informal bullet points to structured formal minutes, making it a good stress test for prompt robustness.
+
 ---
 
-## The Prompt
+## The Final Prompt
 
 ```
-You are a meeting notes parser. Your job is to convert raw meeting notes 
-into a structured JSON object. Always return valid JSON and nothing else. 
+You are a meeting notes parser. Your job is to convert raw meeting notes
+into a structured JSON object. Always return valid JSON and nothing else.
 No explanation, no markdown code fences, no extra text.
 
 Use this exact schema:
@@ -56,7 +72,7 @@ Meeting notes to parse:
 ```
 May 5 standup - Priya, Ravi, and Sam attended.
 Discussed the login bug fix and the new dashboard design.
-Ravi will push the bug fix by end of day. Sam to share design mockups 
+Ravi will push the bug fix by end of day. Sam to share design mockups
 by May 7. No decisions made. Next standup same time Thursday.
 ```
 
@@ -152,8 +168,8 @@ Next meeting: May 26, 2026
 
 **Input:**
 ```
-Quick sync today. Just me and Deepak. Talked about the marketing budget 
-and social media calendar. No decisions yet. Deepak will draft the Q3 
+Quick sync today. Just me and Deepak. Talked about the marketing budget
+and social media calendar. No decisions yet. Deepak will draft the Q3
 budget proposal. No deadline set. No next meeting scheduled.
 ```
 
@@ -185,7 +201,7 @@ budget proposal. No deadline set. No next meeting scheduled.
 Cross-team planning - May 15, 2026
 Attendees: Rohit, Fatima, James, Preethi, Arun
 
-Topics covered: Q2 OKR review, hiring plan for engineering, 
+Topics covered: Q2 OKR review, hiring plan for engineering,
 infrastructure cost reduction, and onboarding process redesign.
 
 Decisions made:
@@ -255,28 +271,74 @@ The first version of the prompt was simply:
 Convert these meeting notes to JSON: [notes]
 ```
 
-The model produced JSON but with inconsistent key names across runs (sometimes `actions` instead of `action_items`, sometimes `participants` instead of `attendees`). The schema was unpredictable, making downstream parsing impossible.
+The model produced JSON but with inconsistent key names across runs. Sometimes `actions` instead of `action_items`, sometimes `participants` instead of `attendees`. The schema was unpredictable, making downstream parsing impossible.
 
-Lesson: Without a fixed schema, the model invents its own structure every time.
+**Lesson:** Without a fixed schema, the model invents its own structure every time. For automation, schema consistency is non-negotiable.
+
+---
 
 ### Iteration 2 - Adding the Schema
 
-Adding the explicit JSON schema with field names and types solved the key naming problem. However, the model was still wrapping the output in markdown code fences (```json ... ```) and sometimes adding a sentence like "Here is the parsed JSON:" before the output.
+Adding the explicit JSON schema with field names and types solved the key naming problem. However, the model was still wrapping the output in markdown code fences and sometimes adding a sentence like "Here is the parsed JSON:" before the output.
 
 This would break any code trying to parse the raw response with `JSON.parse()`.
 
-Lesson: The model defaults to being helpful and conversational. You have to explicitly suppress that behavior.
+**Lesson:** The model defaults to being helpful and conversational. You have to explicitly suppress that behavior for machine-readable output.
+
+---
 
 ### Iteration 3 - Suppressing Prose
 
-Adding the instruction "Always return valid JSON and nothing else. No explanation, no markdown code fences, no extra text." fixed the wrapping issue in most cases. However, on sparse inputs, the model was sometimes inferring data that was not in the notes (e.g., guessing a meeting title from context, or filling in a due date based on "end of week").
+Adding "Always return valid JSON and nothing else. No explanation, no markdown code fences, no extra text." fixed the wrapping issue in most cases. However, on sparse inputs, the model was sometimes inferring data that was not in the notes, such as guessing a meeting title from context or filling in a due date based on "end of week."
 
-Lesson: LLMs try to be helpful by filling gaps. For structured data extraction, fabrication is worse than a null value.
+**Lesson:** LLMs try to be helpful by filling gaps. For structured data extraction, fabrication is worse than a null value. A null is honest; a fabricated date is a silent bug.
+
+---
 
 ### Iteration 4 - Adding the No-Inference Rule
 
 Adding "Extract only what is explicitly stated. Do not infer or fabricate. If a field has no data, use null for strings or [] for arrays." resolved the hallucination issue. The model now correctly returns null for missing dates and empty arrays for missing lists.
 
+**Lesson:** Explicit permission to return null is necessary. Without it, the model interprets empty fields as a problem to solve rather than a valid state to report.
+
+---
+
 ### Final Prompt Stability
 
-After 4 iterations, the prompt produces consistent, parseable JSON across all tested input styles: informal notes, formal minutes, sparse notes, and multi-team sessions. The key design decisions that made it reliable were the fixed schema, the no-prose instruction, and the explicit no-inference rule.
+After 4 iterations, the prompt produces consistent, parseable JSON across all tested input styles: informal notes, formal minutes, sparse notes, and multi-team sessions. The three design decisions that made it reliable were the fixed schema, the no-prose instruction, and the explicit no-inference rule.
+
+---
+
+## Automation Use Cases
+
+This prompt pattern can be extended to other structured extraction tasks:
+
+| Input | Output Schema |
+|-------|--------------|
+| Job descriptions | Skills, requirements, salary, location |
+| Customer support tickets | Category, priority, sentiment, action needed |
+| Research paper abstracts | Problem, method, results, limitations |
+| Invoice text | Vendor, amount, line items, due date |
+| Bug reports | Component, severity, steps to reproduce, expected vs actual |
+
+The same design principles apply: fixed schema, no-prose rule, no-inference rule.
+
+---
+
+## References and Further Reading
+
+- Wei et al. (2022). Emergent Abilities of Large Language Models. https://arxiv.org/abs/2206.07682
+- Mishra et al. (2022). Cross-Task Generalization via Natural Language Crowdsourcing Instructions. https://arxiv.org/abs/2104.08773
+- OpenAI JSON Mode Documentation. https://platform.openai.com/docs/guides/structured-outputs
+
+---
+
+## Acknowledgements
+
+SkillCraft Technology for the internship program and task design.
+
+The open-source community for tooling and documentation around structured output generation with LLMs.
+
+---
+
+Back to main repository: [Skill_Craft_Tasks](../README.md)

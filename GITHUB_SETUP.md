@@ -147,4 +147,4 @@ gh repo view --web
 
 ## Contact
 
-For questions about this repository, open an issue on GitHub or reach out via the profile at https://github.com/mithun50
+For questions about this repository, open an issue on GitHub or reach out via the profile at https://github.com/mithun50 or by email at mithungowda.b7411@gmail.com

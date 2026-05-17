@@ -114,3 +114,4 @@ Researchers and practitioners in the LLM space whose published work on prompt de
 ## Connect
 
 GitHub: [mithun50](https://github.com/mithun50)
+Email: mithungowda.b7411@gmail.com

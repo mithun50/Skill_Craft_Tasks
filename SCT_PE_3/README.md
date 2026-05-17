@@ -12,6 +12,12 @@ Apply prompting to semi-automate a useful real-world task. Design a clear, consi
 
 ---
 
+## Screenshot
+
+![Task Automation - ChatGPT UI](../screenshots/screen3_task_automation.png)
+
+---
+
 ## Background: Prompting for Automation
 
 Task automation with LLMs differs from creative prompting in one critical way: reliability matters more than originality. An automation prompt needs to produce the same structure every time, regardless of how the input is formatted. This requires a different design philosophy: explicit schemas, strict output rules, and no-inference constraints.

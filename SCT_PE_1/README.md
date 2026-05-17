@@ -12,6 +12,12 @@ Learn the basics of prompt engineering by experimenting with clarity, specificit
 
 ---
 
+## Screenshot
+
+![Writing Better Prompts - ChatGPT UI](../screenshots/screen1_writing_better_prompts.png)
+
+---
+
 ## Background: What is Prompt Engineering?
 
 Prompt engineering is the practice of designing and refining inputs given to a large language model (LLM) to produce more accurate, relevant, and useful outputs. A well-crafted prompt reduces ambiguity, sets context, and guides the model toward the desired response format and depth.

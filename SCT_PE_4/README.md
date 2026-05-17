@@ -12,6 +12,12 @@ Build a simple assistant by chaining multiple prompts or simulating dialogue. Cr
 
 ---
 
+## Screenshot
+
+![Simulating an Assistant - ChatGPT UI](../screenshots/screen4_simulating_assistant.png)
+
+---
+
 ## Background: Multi-Turn Assistants
 
 A single prompt produces a single response. A multi-turn assistant produces a conversation. The difference is context management: each turn must carry the full history of prior turns so the model can adapt its behavior based on what has already been said.

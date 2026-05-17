@@ -12,6 +12,12 @@ Explore how prompt structure, tone, and examples influence creative tasks. Use f
 
 ---
 
+## Screenshot
+
+![Prompting for Creativity - ChatGPT UI](../screenshots/screen2_prompting_for_creativity.png)
+
+---
+
 ## Background: Creativity and LLMs
 
 Large language models are not inherently creative in the human sense. They generate outputs by predicting likely continuations based on patterns in training data. What looks like creativity is actually the model navigating a vast probability space shaped by the prompt.
